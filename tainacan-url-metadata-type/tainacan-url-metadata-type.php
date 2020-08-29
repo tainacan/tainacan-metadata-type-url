@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: URL Metadata Type
+Plugin Name: Tainacan URL Metadata Type
 Plugin URI: https://tainacan.org/new
 Description: A URL Metadata Type for Tainacan, that displays a link or an embed content, if possible.
 Author: wetah

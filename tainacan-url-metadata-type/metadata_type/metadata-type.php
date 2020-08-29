@@ -5,6 +5,7 @@
  * This is inside "metadata_type/metadata-type.php"
  */
 class URL_Metadata_Type extends \Tainacan\Metadata_Types\Metadata_Type {
+    use \Tainacan\Traits\Formatter_Text;
 
     function __construct() {
 
@@ -18,7 +19,7 @@ class URL_Metadata_Type extends \Tainacan\Metadata_Types\Metadata_Type {
         $this->set_preview_template('
             <div>
                 <div class="control is-clearfix">
-                    <input placeholder="https://youtube.com/?v=abc123456" class="input">
+                    <input type="url" placeholder="https://youtube.com/?v=abc123456" class="input">
                 </div>
             </div>
         ');
@@ -49,5 +50,50 @@ class URL_Metadata_Type extends \Tainacan\Metadata_Types\Metadata_Type {
             return ['step' => __('The option "step" is invald. Must be a number!', 'tainacan-url-metadata-type')];
         }
     }
+
+    	/**
+	 * Get the value as a HTML string with links
+	 * @return string
+	 */
+	public function get_value_as_html(\Tainacan\Entities\Item_Metadata_Entity $item_metadata) {
+		global $wp_embed;
+		$value = $item_metadata->get_value();
+		$return = '';
+
+		if ( is_array($value) && $item_metadata->is_multiple() ) {
+			$total = sizeof($value);
+			$count = 0;
+			$prefix = $item_metadata->get_multivalue_prefix();
+			$suffix = $item_metadata->get_multivalue_suffix();
+			$separator = $item_metadata->get_multivalue_separator();
+			foreach ( $value as $el ) {
+				$return .= $prefix;
+				
+				$embed = $wp_embed->autoembed($el);
+				
+				if ( $embed == $el ) {
+					$return .= $this->make_clickable_links($el);
+				} else {
+					$return .= $embed;
+				}
+
+				$return .= $suffix;
+
+				$count ++;
+				if ($count < $total)
+					$return .= $separator;
+			}
+		} else {
+
+			$embed = $wp_embed->autoembed($value);
+			
+			if ( $embed == $value ) {
+				$return = $this->make_clickable_links($value);
+			} else {
+				$return = $embed;
+			}
+		}
+		return $return;
+	}
 }
 ?>
