@@ -14,8 +14,16 @@ To simply build the necessary `.vue` files into bundled javascript:
 ./build.sh
 ```
 
-To besides that, moving the necessary plugin files to your wordpress plugin directory:
+To, besides that, move the necessary plugin files to your wordpress plugin directory:
 
 ```sh
 ./build.sh /var/www/html/wp-content/plugins/
+```
+
+If you don't like the script you can bundle things by yourself:
+
+```sh
+cd tainacan-url-metadata-type/metadata_type
+npm install
+npm run build
 ```
