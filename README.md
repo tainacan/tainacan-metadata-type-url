@@ -23,7 +23,7 @@ To, besides that, move the necessary plugin files to your wordpress plugin direc
 If you don't like the script you can bundle things by yourself:
 
 ```sh
-cd tainacan-url-metadata-type/metadata_type
+cd tainacan-metadata-type-url/metadata_type
 npm install
 npm run build
 ```
