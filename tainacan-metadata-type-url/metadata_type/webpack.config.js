@@ -4,7 +4,7 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 module.exports = {
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, ""),
     filename: "metadata-type.bundle.js",
   },
   module: {

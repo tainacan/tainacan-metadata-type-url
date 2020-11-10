@@ -27,3 +27,5 @@ cd tainacan-metadata-type-url/metadata_type
 npm install
 npm run build
 ```
+
+But keep in mind that the script also takes care of removing some source files not necessary for the plugin to work, such as `.vue`, `package.json` and `webpack.config.json`.

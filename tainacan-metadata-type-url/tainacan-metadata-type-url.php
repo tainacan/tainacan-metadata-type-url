@@ -4,7 +4,7 @@ Plugin Name: Tainacan URL Metadata Type
 Plugin URI: https://tainacan.org/new
 Description: A URL Metadata Type for Tainacan, that displays a link or an embed content, if possible.
 Author: wetah
-Version: 0.0.1
+Version: 0.0.2
 Text Domain: tainacan-metadata-type-url
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -18,7 +18,7 @@ function tainacan_url_register_metadata_type($helper) {
     // Registering the Vue Component
     $handle = 'tainacan-metadata-type-url';
     $class_name = 'URL_Metadata_Type';
-    $metadata_script_url = plugin_dir_url(__FILE__) . 'metadata_type/dist/metadata-type.bundle.js';
+    $metadata_script_url = plugin_dir_url(__FILE__) . 'metadata_type/metadata-type.bundle.js';
     $helper->register_metadata_type($handle, $class_name, $metadata_script_url);
 }
 
