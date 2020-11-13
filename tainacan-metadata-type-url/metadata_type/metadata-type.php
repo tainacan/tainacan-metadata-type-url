@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Class URL_Metadata_Type
+ * Class TAINACAN_URL_Plugin_Metadata_Type
  * This is inside "metadata_type/metadata-type.php"
  */
-class URL_Metadata_Type extends \Tainacan\Metadata_Types\Metadata_Type {
+class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadata_Type {
     use \Tainacan\Traits\Formatter_Text;
 
     function __construct() {
@@ -56,7 +56,7 @@ class URL_Metadata_Type extends \Tainacan\Metadata_Types\Metadata_Type {
 		global $wp_embed;
 		$value = $item_metadata->get_value();
 		$return = '';
-
+		
 		if ( is_array($value) && $item_metadata->is_multiple() ) {
 			$total = sizeof($value);
 			$count = 0;
@@ -74,20 +74,21 @@ class URL_Metadata_Type extends \Tainacan\Metadata_Types\Metadata_Type {
 						if (!empty($this->get_option('iframe-min-height')))
 							$iframeMininumHeight = $this->get_option('iframe-min-height');
 
-                        $return = '<iframe src="' . $el . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
+                        $return .= '<iframe src="' . $el . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
                     } else {
-                        $return = $this->make_clickable_links($el);
+                        $return .= $this->make_clickable_links($el);
                     }
 				} else {
 					$return .= $embed;
 				}
 
 				$return .= $suffix;
-
+				
 				$count ++;
 				if ($count < $total)
 					$return .= $separator;
 			}
+			
 		} else {
 
 			$embed = $wp_embed->autoembed($value);
@@ -106,6 +107,7 @@ class URL_Metadata_Type extends \Tainacan\Metadata_Types\Metadata_Type {
 				$return = $embed;
 			}
 		}
+		
 		return $return;
 	}
 }

@@ -4,7 +4,7 @@ Tags: museums, libraries, archives, GLAM, collections, repository, tainacan, url
 Requires at least: 4.8
 Tested up to: 5.5.3
 Requires PHP: 5.6
-Stable tag: 0.0.2
+Stable tag: 0.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,6 +31,9 @@ This plugin will only work with [Tainacan plugin](https://wordpress.org/plugins/
 * Source code on GitHub: [https://github.com/tainacan/tainacan-metadata-type-url](https://github.com/tainacan/tainacan-metadata-type-url)
 
 == Changelog ==
+
+= 0.0.3 =
+* Better namespacing and fixes multivalued previews
 
 = 0.0.2 =
 * First release of the Tainacan URL Metadata Type

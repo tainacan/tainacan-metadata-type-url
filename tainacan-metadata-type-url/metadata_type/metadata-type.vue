@@ -22,7 +22,7 @@
         <transition name="filter-item">
           <div 
               v-if="isPreviewingHtml"
-              v-html="itemMetadatum.value_as_html"
+              v-html="singleHTMLPreview"
               />
         </transition>
   </div>
@@ -35,21 +35,51 @@ export default {
   props: {
     itemMetadatum: Object,
     value: [String, Number, Array],
-    disabled: false,
+    disabled: false
   },
   data() {
     return {
-      isPreviewingHtml: false
+      isPreviewingHtml: false,
+      singleHTMLPreview: ''
     }
   },
   methods: {
     onInput(value) {
+      this.isPreviewingHtml = false;
+      this.singleHTMLPreview = '';
       this.$emit("input", value);
     },
     onBlur() {
       this.$emit("blur");
     },
+    createElementFromHTML(htmlString) {
+      let div = document.createElement('div');
+      div.innerHTML = htmlString.trim();
+      return div; 
+    },
     previewHtml() {
+
+      // If we are going to display preview, renders it
+      if (!this.isPreviewingHtml) {
+
+        // Multivalued metadata need to be split as the values_as_html shows every value
+        if (this.itemMetadatum.metadatum.multiple == 'yes') {
+
+          const valuesAsHtml = this.createElementFromHTML(this.itemMetadatum.value_as_html);
+          const valuesAsArray = Object.values(valuesAsHtml.children).filter((aValue) => aValue.outerHTML != '<span class="multivalue-separator"> | </span>');
+
+          const singleValueIndex = this.itemMetadatum.value.findIndex((aValue) => aValue == this.value);
+
+          if (singleValueIndex >= 0)
+            this.singleHTMLPreview = valuesAsArray[singleValueIndex].outerHTML;
+          
+        } else {
+          this.singleHTMLPreview = this.itemMetadatum.value_as_html;
+        }
+
+      }
+
+      // Toggle Preview view
       this.isPreviewingHtml = !this.isPreviewingHtml;
     }
   },
