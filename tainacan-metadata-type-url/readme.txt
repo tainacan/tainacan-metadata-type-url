@@ -1,4 +1,5 @@
 === Tainacan URL Metadata Type ===
+Author: tainacan
 Contributors: wetah, vnmedeiros, leogermani, tainacan
 Tags: museums, libraries, archives, GLAM, collections, repository, tainacan, url, embed
 Requires at least: 4.8
