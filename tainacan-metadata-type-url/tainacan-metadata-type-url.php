@@ -4,7 +4,7 @@ Plugin Name: Tainacan URL Metadata Type
 Plugin URI: https://tainacan.org/new
 Description: A URL Metadata Type for Tainacan, that displays a link or an embed content, if possible.
 Author: wetah
-Version: 0.0.3
+Version: 0.0.4
 Text Domain: tainacan-metadata-type-url
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html

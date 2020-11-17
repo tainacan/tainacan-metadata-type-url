@@ -9,7 +9,9 @@
             @blur="onBlur"
             type="url"
         />
-        <div class="add-new-term">
+        <div 
+                  v-if="itemMetadatum.item.id"
+                class="add-new-term">
             <a
                     @click="previewHtml"
                     class="add-link">
