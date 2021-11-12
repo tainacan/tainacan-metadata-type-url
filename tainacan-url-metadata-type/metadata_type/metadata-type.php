@@ -76,7 +76,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 
 						$return .= '<iframe src="' . $el . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
 					} else {
-						$mkstr = preg_replace('/\[([^\]]+)\]\(([^\)]+)\)/', '<a href="\2">\1</a>', $el);
+						$mkstr = preg_replace('/\[([^\]]+)\]\(([^\)]+)\)/', '<a href="\2" target="_blank" title="\1">\1</a>', $el);
 						$return .= $this->make_clickable_links($mkstr);
 					}
 				} else {
@@ -102,7 +102,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 
 					$return = '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
 				} else {
-					$value = preg_replace('/\[([^\]]+)\]\(([^\)]+)\)/', '<a href="\2">\1</a>', $value);
+					$value = preg_replace('/\[([^\]]+)\]\(([^\)]+)\)/', '<a href="\2" target="_blank" title="\1">\1</a>', $value);
 					$return = $this->make_clickable_links($value);
 				}
 			} else {
