@@ -7,7 +7,6 @@
             :placeholder="URL"
             @input="onInput($event)"
             @blur="onBlur"
-            type="url"
         />
         <div 
                   v-if="itemMetadatum.item.id"
