@@ -12,7 +12,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
         parent::__construct();
 
         // Basic options
-        $this->set_name( __('URL Metadata Type', 'tainacan-metadata-type-url') );
+        $this->set_name( __('URL', 'tainacan-metadata-type-url') );
         $this->set_description( __('An URL link, possibly with an embed content.', 'tainacan-metadata-type-url') );
         $this->set_primitive_type(['text']);
         $this->set_component('tainacan-metadata-type-url');
