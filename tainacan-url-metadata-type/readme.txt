@@ -3,7 +3,7 @@ Author: tainacan
 Contributors: wetah, vnmedeiros, leogermani, tainacan
 Tags: museums, libraries, archives, GLAM, collections, repository, tainacan, url, embed
 Requires at least: 4.8
-Tested up to: 5.5.3
+Tested up to: 5.8.2
 Requires PHP: 5.6
 Stable tag: 0.0.5
 License: GPLv2 or later

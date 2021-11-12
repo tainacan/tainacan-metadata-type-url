@@ -28,7 +28,6 @@ function tainacan_url_plugin_register_metadata_type($helper) {
 
 add_action("tainacan-register-vuejs-component", "tainacan_url_plugin_register_metadata_type_form");
 function tainacan_url_plugin_register_metadata_type_form($helper) {
-
     // Registering the Vue Component for the Metadata Options Form
     $handle2 = 'url-metadata-type-form';
     $component_script_url = plugin_dir_url(__FILE__) . 'metadata_type/metadata-type-form.js';
