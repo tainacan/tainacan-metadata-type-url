@@ -119,8 +119,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 	 */
 	public function validate(Tainacan\Entities\Item_Metadata_Entity $item_metadata) {
 		$value = $item_metadata->get_value();
-		$reg_mrkd = '~\[(.+)\]\(([^ ]+)?\)~i';
-		$reg_url = '~((www\.|http:\/\/www\.|http:\/\/|https:\/\/www\.|https:\/\/|ftp:\/\/www\.|ftp:\/\/|ftps:\/\/www\.|ftps:\/\/)[^"<\s]+)(?![^<>]*>|[^"]*?<\/a)~i';
+		//$reg_mrkd = '~\[(.+)\]\(([^ ]+)?\)~i';
+		$reg_url = '~^((www\.|http:\/\/www\.|http:\/\/|https:\/\/www\.|https:\/\/|ftp:\/\/www\.|ftp:\/\/|ftps:\/\/www\.|ftps:\/\/)[^"<\s]+)(?![^<>]*>|[^"]*?<\/a)$~i';
 		$reg_full = '~\[(.+)\]\((((www\.|http:\/\/www\.|http:\/\/|https:\/\/www\.|https:\/\/|ftp:\/\/www\.|ftp:\/\/|ftps:\/\/www\.|ftps:\/\/)[^"<\s]+)(?![^<>]*>|[^"]*?<\/a))?\)~i';
 
 		// Multivalued metadata --------------
@@ -131,13 +131,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 				if ( !empty($url_value) ) {
 
 					// If this seems to be a markdown link, we check if the url inside it is ok as well
-					if ( preg_match($reg_mrkd, $url_value) && !preg_match($reg_full, $url_value) ) {
-						$this->add_error( __('Invalid Markdown Link. Please provide a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url') );
-						return false;
-
-					// But if is suposed to be just a link, we check if the url valid
-					} else if ( !preg_match($reg_mrkd, $url_value) && !preg_match($reg_url, $url_value) ) {
-						$this->add_error( __('Invalid URL. Please provide a valid link.', 'tainacan-metadata-type-url') );
+					if ( !preg_match($reg_url, $url_value) && !preg_match($reg_full, $url_value) ) {
+						$this->add_error( __('Invalid URL or Markdown Link. Please provide a valid URL or a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url') );
 						return false;
 					}
 				}
@@ -150,13 +145,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 		if ( !empty($value) ) {
 
 			// If this seems to be a markdown link, we check if the url inside it is ok as well
-			if ( preg_match($reg_mrkd, $value) && !preg_match($reg_full, $value) ) {
-				$this->add_error( __('Invalid Markdown Link. Please provide a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url') );
-				return false;
-
-			// But if is suposed to be just a link, we check if the url valid
-			} else if ( !preg_match($reg_mrkd, $value) && !preg_match($reg_url, $value) ) {
-				$this->add_error( __('Invalid URL. Please provide a valid link.', 'tainacan-metadata-type-url') );
+			if ( !preg_match($reg_url, $url_value) && !preg_match($reg_full, $url_value) ) {
+				$this->add_error( __('Invalid URL or Markdown Link. Please provide a valid URL or a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url') );
 				return false;
 			}
 		}
