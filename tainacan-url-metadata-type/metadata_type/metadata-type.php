@@ -18,6 +18,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
         $this->set_component('tainacan-metadata-type-url');
         $this->set_form_component('tainacan-metadata-form-type-url');
         $this->set_default_options([
+			'link-as-button' => 'no',
 			'force-iframe' => 'no',
 			'iframe-min-height' => '',
 			'iframe-allowfullscreen' => 'no'
@@ -33,6 +34,10 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 	
 	public function get_form_labels(){
 		return [
+			'link-as-button' => [
+				'title' 	  => __( 'Display link as a button', 'tainacan-metadata-type-url' ),
+				'description' => __( 'Style the link to be displayed as a button instead of a simple textual link.', 'tainacan-metadata-type-url' ),
+			],
 			'force-iframe' => [
 				'title' 	  => __( 'Force iframe', 'tainacan-metadata-type-url' ),
 				'description' => __( 'Force the URL to be displayed in an iframe in case the content is not embeddable by WordPress.', 'tainacan-metadata-type-url' ),
@@ -63,6 +68,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 			$prefix = $item_metadata->get_multivalue_prefix();
 			$suffix = $item_metadata->get_multivalue_suffix();
 			$separator = $item_metadata->get_multivalue_separator();
+
 			foreach ( $value as $el ) {
 				$return .= $prefix;
 				
@@ -76,7 +82,11 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 
 						$return .= '<iframe src="' . $el . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
 					} else {
-						$mkstr = preg_replace('/\[([^\]]+)\]\(([^\)]+)\)/', '<a href="\2" target="_blank" title="\1">\1</a>', $el);
+						$mkstr = preg_replace(
+							'/\[([^\]]+)\]\(([^\)]+)\)/',
+							$this->get_option('link-as-button') == 'yes' ? '<div class="wp-block-button"><a class="wp-block-button__link" href="\2" target="_blank" title="\1">\1</a></div>' : '<a href="\2" target="_blank" title="\1">\1</a>',
+							$el
+						);
 						$return .= $this->make_clickable_links($mkstr);
 					}
 				} else {
@@ -102,7 +112,11 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 
 					$return = '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
 				} else {
-					$value = preg_replace('/\[([^\]]+)\]\(([^\)]+)\)/', '<a href="\2" target="_blank" title="\1">\1</a>', $value);
+					$mkstr = preg_replace(
+						'/\[([^\]]+)\]\(([^\)]+)\)/',
+						$this->get_option('link-as-button') == 'yes' ? '<div class="wp-block-button"><a class="wp-block-button__link" href="\2" target="_blank" title="\1">\1</a></div>' : '<a href="\2" target="_blank" title="\1">\1</a>',
+						$el
+					);
 					$return = $this->make_clickable_links($value);
 				}
 			} else {
@@ -132,7 +146,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 
 					// If this seems to be a markdown link, we check if the url inside it is ok as well
 					if ( !preg_match($reg_url, $url_value) && !preg_match($reg_full, $url_value) ) {
-						$this->add_error( __('Invalid URL or Markdown Link. Please provide a valid URL or a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url') );
+						$this->add_error( sprintf( __('"%s" is invalid. Please provide a valid, full URL or a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url'), $url_value ) );
 						return false;
 					}
 				}
@@ -145,8 +159,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 		if ( !empty($value) ) {
 
 			// If this seems to be a markdown link, we check if the url inside it is ok as well
-			if ( !preg_match($reg_url, $url_value) && !preg_match($reg_full, $url_value) ) {
-				$this->add_error( __('Invalid URL or Markdown Link. Please provide a valid URL or a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url') );
+			if ( !preg_match($reg_url, $value) && !preg_match($reg_full, $value) ) {
+				$this->add_error( sprintf( __('"%s" is invalid. Please provide a valid, full URL or a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url'), $value ) );
 				return false;
 			}
 		}

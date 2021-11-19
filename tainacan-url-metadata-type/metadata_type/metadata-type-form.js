@@ -7,29 +7,48 @@ const TainacanMetadataFormURLType = {
     },
     data: function() {
         return {
+            linkAsButton: [ String ],
             forceIframe: [ String ],
             iframeMinimumHeight: [ Number ],
             iframeAllowfullscreen: [ String ]
         }
     },
     created: function() {
+        this.linkAsButton = this.value && this.value['link-as-button'] ? this.value['link-as-button'] : 'no';
         this.forceIframe = this.value && this.value['force-iframe'] ? this.value['force-iframe'] : 'no';
         this.iframeMinimumHeight = this.value && this.value['iframe-min-height'] ? this.value['iframe-min-height'] : '';
         this.iframeAllowfullscreen = this.value && this.value['iframe-allowfullscreen'] ? this.value['iframe-allowfullscreen'] : 'no';
     },
     methods: {
+        onUpdateLinksAsButton: function(value) {
+            this.$emit('input', { 'link-as-button': value, 'force-iframe': this.forceIframe, 'iframe-min-height': this.iframeMinimumHeight, 'iframe-allowfullscreen': this.iframeAllowfullscreen });
+        },
         onUpdateForceIframe: function(value) {
-            this.$emit('input', { 'force-iframe': value, 'iframe-min-height': this.iframeMinimumHeight, 'iframe-allowfullscreen': this.iframeAllowfullscreen });
+            this.$emit('input', { 'link-as-button': this.linkAsButton, 'force-iframe': value, 'iframe-min-height': this.iframeMinimumHeight, 'iframe-allowfullscreen': this.iframeAllowfullscreen });
         },
         onUpdateIframeMinimumHeight: function(value) {
-            this.$emit('input', { 'force-iframe': this.forceIframe, 'iframe-min-height': value, 'iframe-allowfullscreen': this.iframeAllowfullscreen });
+            this.$emit('input', { 'link-as-button': this.linkAsButton, 'force-iframe': this.forceIframe, 'iframe-min-height': value, 'iframe-allowfullscreen': this.iframeAllowfullscreen });
         },
         onUpdateIframeAllowfullscreen: function(value) {
-            this.$emit('input', { 'force-iframe': this.forceIframe, 'iframe-min-height': this.iframeMinimumHeight, 'iframe-allowfullscreen': value });
+            this.$emit('input', { 'link-as-button': this.linkAsButton, 'force-iframe': this.forceIframe, 'iframe-min-height': this.iframeMinimumHeight, 'iframe-allowfullscreen': value });
         },
     },
     template: `
     <div>
+        <b-field 
+                :addons="false"
+                :label="$i18n.getHelperTitle('tainacan-metadata-type-url', 'link-as-button')">
+            &nbsp;
+            <b-switch
+                size="is-small" 
+                v-model="linkAsButton"
+                true-value="yes"
+                false-value="no" />
+            <help-button
+                    :title="$i18n.getHelperTitle('tainacan-metadata-type-url', 'link-as-button')"
+                    :message="$i18n.getHelperMessage('tainacan-metadata-type-url', 'link-as-button')"/>
+        </b-field>
+
         <b-field 
                 :addons="false"
                 :label="$i18n.getHelperTitle('tainacan-metadata-type-url', 'force-iframe')">
