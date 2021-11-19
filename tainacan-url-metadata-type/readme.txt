@@ -35,6 +35,7 @@ This plugin will only work with [Tainacan plugin](https://wordpress.org/plugins/
 
 = 0.0.6 =
 * Allows markdown links to display labels like this: [label](url)
+* Adds option to display link with a button style
 * Validates url input on the server side instead of frontend
 
 = 0.0.5 =
