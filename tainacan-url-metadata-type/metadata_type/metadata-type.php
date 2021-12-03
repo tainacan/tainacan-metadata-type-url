@@ -58,7 +58,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 	 * @return string
 	 */
 	public function get_value_as_html(\Tainacan\Entities\Item_Metadata_Entity $item_metadata) {
-		global $wp_embed;
+		
 		$value = $item_metadata->get_value();
 		$return = '';
 		
@@ -72,26 +72,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 			foreach ( $value as $el ) {
 				$return .= $prefix;
 				
-				$embed = $wp_embed->autoembed($el);
-				
-				if ( $embed == $el ) {
-					if ($this->get_option('force-iframe') == 'yes') {
-						$iframeMininumHeight = '100%';
-						if (!empty($this->get_option('iframe-min-height')))
-							$iframeMininumHeight = $this->get_option('iframe-min-height');
-
-						$return .= '<iframe src="' . $el . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
-					} else {
-						$mkstr = preg_replace(
-							'/\[([^\]]+)\]\(([^\)]+)\)/',
-							$this->get_option('link-as-button') == 'yes' ? '<div class="wp-block-button"><a class="wp-block-button__link" href="\2" target="_blank" title="\1">\1</a></div>' : '<a href="\2" target="_blank" title="\1">\1</a>',
-							$el
-						);
-						$return .= $this->make_clickable_links($mkstr);
-					}
-				} else {
-					$return .= $embed;
-				}
+				$return .= $this->get_single_value_as_html($el);
 
 				$return .= $suffix;
 				
@@ -102,28 +83,42 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 			
 		} else {
 
-			$embed = $wp_embed->autoembed($value);
+			$return .= $this->get_single_value_as_html($value);
 			
-			if ( $embed == $value ) {
-				if ($this->get_option('force-iframe') == 'yes') {
-					$iframeMininumHeight = '100%';
-					if (!empty($this->get_option('iframe-min-height')))
-						$iframeMininumHeight = $this->get_option('iframe-min-height');
-
-					$return = '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
-				} else {
-					$mkstr = preg_replace(
-						'/\[([^\]]+)\]\(([^\)]+)\)/',
-						$this->get_option('link-as-button') == 'yes' ? '<div class="wp-block-button"><a class="wp-block-button__link" href="\2" target="_blank" title="\1">\1</a></div>' : '<a href="\2" target="_blank" title="\1">\1</a>',
-						$el
-					);
-					$return = $this->make_clickable_links($value);
-				}
-			} else {
-				$return = $embed;
-			}
 		}
 		
+		return $return;
+	}
+
+	/**
+	 * Get the a single value as a HTML string with links
+	 * @return string
+	 */
+	public function get_single_value_as_html($value) {
+		global $wp_embed;
+
+		$return = '';
+		$embed = $wp_embed->autoembed($value);
+			
+		if ( $embed == $value ) {
+			if ($this->get_option('force-iframe') == 'yes') {
+				$iframeMininumHeight = '100%';
+				if (!empty($this->get_option('iframe-min-height')))
+					$iframeMininumHeight = $this->get_option('iframe-min-height');
+
+				$return = '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
+			} else {
+				$mkstr = preg_replace(
+					'/\[([^\]]+)\]\(([^\)]+)\)/',
+					$this->get_option('link-as-button') == 'yes' ? '<div class="wp-block-button"><a class="wp-block-button__link" href="\2" target="_blank" title="\1">\1</a></div>' : '<a href="\2" target="_blank" title="\1">\1</a>',
+					$value
+				);
+				$return = $this->make_clickable_links($mkstr);
+			}
+		} else {
+			$return = $embed;
+		}
+
 		return $return;
 	}
 

@@ -20,7 +20,7 @@ const TainacanMetadataFormURLType = {
         this.iframeAllowfullscreen = this.value && this.value['iframe-allowfullscreen'] ? this.value['iframe-allowfullscreen'] : 'no';
     },
     methods: {
-        onUpdateLinksAsButton: function(value) {
+        onUpdateLinkAsButton: function(value) {
             this.$emit('input', { 'link-as-button': value, 'force-iframe': this.forceIframe, 'iframe-min-height': this.iframeMinimumHeight, 'iframe-allowfullscreen': this.iframeAllowfullscreen });
         },
         onUpdateForceIframe: function(value) {
@@ -42,6 +42,7 @@ const TainacanMetadataFormURLType = {
             <b-switch
                 size="is-small" 
                 v-model="linkAsButton"
+                @input="onUpdateLinkAsButton"
                 true-value="yes"
                 false-value="no" />
             <help-button
