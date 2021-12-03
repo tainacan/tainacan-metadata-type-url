@@ -4,7 +4,7 @@
             :disabled="disabled"
             :id="'tainacan-item-metadatum_id-' + itemMetadatum.metadatum.id + (itemMetadatum.parent_meta_id ? ('_parent_meta_id-' + itemMetadatum.parent_meta_id) : '')"
             :value="value"
-            :placeholder="URL"
+            :placeholder="itemMetadatum.metadatum.placeholder ? itemMetadatum.metadatum.placeholder : '[link](https://url.com)'"
             @input="onInput($event)"
             @blur="onBlur"
         />
