@@ -60,7 +60,10 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 	public function get_value_as_html(\Tainacan\Entities\Item_Metadata_Entity $item_metadata) {
 		
 		$value = $item_metadata->get_value();
+		$link_as_button = $this->get_option('link-as-button') == 'yes';
 		$return = '';
+
+		$return .= $link_as_button ? '<div class="wp-block-buttons">' : '';
 		
 		if ( is_array($value) && $item_metadata->is_multiple() ) {
 			$total = sizeof($value);
@@ -77,16 +80,15 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 				$return .= $suffix;
 				
 				$count ++;
-				if ($count < $total)
+				if ($count < $total && !$link_as_button)
 					$return .= $separator;
 			}
 			
-		} else {
-
-			$return .= $this->get_single_value_as_html($value);
-			
+		} else {			
+			$return .= $this->get_single_value_as_html($value);	
 		}
-		
+		$return .= $link_as_button ? '</div>' : '';
+
 		return $return;
 	}
 
@@ -97,26 +99,37 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 	public function get_single_value_as_html($value) {
 		global $wp_embed;
 
+		$link_as_button = $this->get_option('link-as-button') == 'yes';
 		$return = '';
-		$embed = $wp_embed->autoembed($value);
-			
-		if ( $embed == $value ) {
-			if ($this->get_option('force-iframe') == 'yes') {
-				$iframeMininumHeight = '100%';
-				if (!empty($this->get_option('iframe-min-height')))
-					$iframeMininumHeight = $this->get_option('iframe-min-height');
 
-				$return = '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
-			} else {
-				$mkstr = preg_replace(
-					'/\[([^\]]+)\]\(([^\)]+)\)/',
-					$this->get_option('link-as-button') == 'yes' ? '<div class="wp-block-button"><a class="wp-block-button__link" href="\2" target="_blank" title="\1">\1</a></div>' : '<a href="\2" target="_blank" title="\1">\1</a>',
-					$value
-				);
-				$return = $this->make_clickable_links($mkstr);
-			}
+		if ($link_as_button) {
+			$mkstr = preg_replace(
+				'/\[([^\]]+)\]\(([^\)]+)\)/',
+				'<div class="wp-block-button"><a class="wp-block-button__link" href="\2" target="_blank" title="\1">\1</a></div>',
+				$value
+			);
+			$return = $this->make_clickable_links($mkstr);
 		} else {
-			$return = $embed;
+			$embed = $wp_embed->autoembed($value);
+				
+			if ( $embed == $value ) {
+				if ($this->get_option('force-iframe') == 'yes') {
+					$iframeMininumHeight = '100%';
+					if (!empty($this->get_option('iframe-min-height')))
+						$iframeMininumHeight = $this->get_option('iframe-min-height');
+
+					$return = '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
+				} else {
+					$mkstr = preg_replace(
+						'/\[([^\]]+)\]\(([^\)]+)\)/',
+						'<a href="\2" target="_blank" title="\1">\1</a>',
+						$value
+					);
+					$return = $this->make_clickable_links($mkstr);
+				}
+			} else {
+				$return = $embed;
+			}
 		}
 
 		return $return;

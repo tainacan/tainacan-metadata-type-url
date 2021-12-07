@@ -1,9 +1,18 @@
+.metadata-type-ainacan_url_plugin_metadata_type .multivalue-separator,
 .metadata-type-tainacan_url_plugin_metadata_type .multivalue-separator {
     display: block;
     max-height: 1px;
     width: 80px;
-    background: var(--tainacan-gray3);
+    background: var(--tainacan-gray3, #cbcbcb);
     content: none;
     color: transparent !important;
-    margin: 1em auto !important;
+    margin: 1em auto 1em 0 !important;
+}
+.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons,
+.metadata-type-tainacan_url_plugin_metadata_type .wp-block-buttons {
+    display: flex !important;
+}
+.metadata-type-ainacan_url_plugin_metadata_type .wp-block-buttons>.wp-block-button,
+.metadata-type-tainacan_url_plugin_metadata_type .wp-block-buttons>.wp-block-button {
+    width: auto !important;
 }
