@@ -2,10 +2,10 @@
 Author: tainacan
 Contributors: wetah, vnmedeiros, leogermani, tainacan
 Tags: museums, libraries, archives, GLAM, collections, repository, tainacan, url, embed
-Requires at least: 4.8
-Tested up to: 5.8.2
+Requires at least: 5.0
+Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 0.0.9
+Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -32,6 +32,9 @@ This plugin will only work with [Tainacan plugin](https://wordpress.org/plugins/
 * Source code on GitHub: [https://github.com/tainacan/tainacan-metadata-type-url](https://github.com/tainacan/tainacan-metadata-type-url)
 
 == Changelog ==
+
+= 0.1.0 =
+* Adds responsive wrapper from Tainacan plugin
 
 = 0.0.9 =
 * Improves style of multivalue separator and links as buttons

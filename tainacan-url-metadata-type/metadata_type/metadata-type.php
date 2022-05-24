@@ -118,7 +118,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 					if (!empty($this->get_option('iframe-min-height')))
 						$iframeMininumHeight = $this->get_option('iframe-min-height');
 
-					$return = '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>';
+					$tainacan_embed = \Tainacan\Embed::get_instance();
+					$return = $tainacan_embed->add_responsive_wrapper( '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>' );
 				} else {
 					$mkstr = preg_replace(
 						'/\[([^\]]+)\]\(([^\)]+)\)/',
@@ -128,7 +129,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 					$return = $this->make_clickable_links($mkstr);
 				}
 			} else {
-				$return = $embed;
+				$tainacan_embed = \Tainacan\Embed::get_instance();
+				$return = $tainacan_embed->add_responsive_wrapper($embed);
 			}
 		}
 
