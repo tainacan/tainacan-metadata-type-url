@@ -21,7 +21,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 			'link-as-button' => 'no',
 			'force-iframe' => 'no',
 			'iframe-min-height' => '',
-			'iframe-allowfullscreen' => 'no'
+			'iframe-allowfullscreen' => 'no',
+			'is-image' => 'no'
 		]);
 		$this->set_preview_template('
 			<div>
@@ -49,6 +50,10 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 			'iframe-allowfullscreen' => [
 				'title' 	  => __( 'Allow fullscreen on forced iframe', 'tainacan-metadata-type-url' ),
 				'description' => __( 'If forcing the use of an iframe, allows it to request fullscreen to the browser.', 'tainacan-metadata-type-url' ),
+			],
+			'is-image' => [
+				'title' 	  => __( 'Is link to external image', 'tainacan-metadata-type-url' ),
+				'description' => __( 'If you are linking directly to an external image, use this option so it can be properly embedded.', 'tainacan-metadata-type-url' ),
 			]
 		];
 	}
@@ -73,15 +78,18 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 			$separator = $item_metadata->get_multivalue_separator();
 
 			foreach ( $value as $el ) {
-				$return .= $prefix;
-				
-				$return .= $this->get_single_value_as_html($el);
+				if ( !empty($el) ) {
+					$return .= $prefix;
+					
+					$return .= $this->get_single_value_as_html($el);
 
-				$return .= $suffix;
-				
-				$count ++;
-				if ($count < $total && !$link_as_button)
-					$return .= $separator;
+					$return .= $suffix;
+					
+					$count ++;
+
+					if ($count < $total && !$link_as_button)
+						$return .= $separator;
+				}
 			}
 			
 		} else {			
@@ -110,16 +118,33 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 			);
 			$return = $this->make_clickable_links($mkstr);
 		} else {
-			$embed = $wp_embed->autoembed($value);
-				
-			if ( $embed == $value ) {
-				if ($this->get_option('force-iframe') == 'yes') {
-					$iframeMininumHeight = '100%';
-					if (!empty($this->get_option('iframe-min-height')))
-						$iframeMininumHeight = $this->get_option('iframe-min-height');
 
-					$tainacan_embed = \Tainacan\Embed::get_instance();
-					$return = $tainacan_embed->add_responsive_wrapper( '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>' );
+			// First, we try WordPress autoembed
+			$embed = $wp_embed->autoembed($value);
+			
+			// If it didn't work, it will still ba a URL
+			if ( $embed == $value ) {
+
+				// Than we can force the usage of an iframe
+				if ( $this->get_option('force-iframe') == 'yes' ) {
+
+					// URL points to an image file
+					if ( $this->get_option('is-image') == 'yes' ) {
+						$return = sprintf('<a href="%s" target="blank"><img src="%s" /></a>', $value, $value);
+
+					// URL points to a content that is not an image
+					} else {
+						$iframeMininumHeight = '100%';
+
+						if (!empty($this->get_option('iframe-min-height')))
+							$iframeMininumHeight = $this->get_option('iframe-min-height');
+
+						// Creates an embed with responsive wrapper
+						$tainacan_embed = \Tainacan\Embed::get_instance();
+						$return = $tainacan_embed->add_responsive_wrapper( '<iframe src="' . $value . '" width="100%" height="' . $iframeMininumHeight  . '" style="border:none;" allowfullscreen="' . ($this->get_option('iframe-allowfullscreen') == 'yes' ? 'true' : 'false') . '"></iframe>' );
+					}
+
+				// Or we can leave it as a link
 				} else {
 					$mkstr = preg_replace(
 						'/\[([^\]]+)\]\(([^\)]+)\)/',
@@ -128,6 +153,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 					);
 					$return = $this->make_clickable_links($mkstr);
 				}
+
+			// If the autoembed did work, we pass the responsive wrapper to it
 			} else {
 				$tainacan_embed = \Tainacan\Embed::get_instance();
 				$return = $tainacan_embed->add_responsive_wrapper($embed);
