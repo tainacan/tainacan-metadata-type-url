@@ -123,7 +123,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 			$embed = $wp_embed->autoembed($value);
 			
 			// If it didn't work, it will still ba a URL
-			if ( $embed == $value ) {
+ 			if ( esc_url($embed) == esc_url($value) ) {
 
 				// Than we can force the usage of an iframe
 				if ( $this->get_option('force-iframe') == 'yes' ) {
