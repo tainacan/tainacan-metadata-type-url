@@ -5,7 +5,7 @@ Tags: museums, libraries, archives, GLAM, collections, repository, tainacan, url
 Requires at least: 5.0
 Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -33,7 +33,7 @@ This plugin will only work with [Tainacan plugin](https://wordpress.org/plugins/
 
 == Changelog ==
 
-= 0.1.0 =
+= 0.1.1 =
 * Adds responsive wrapper from Tainacan plugin
 
 = 0.0.9 =
