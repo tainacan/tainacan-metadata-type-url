@@ -1,12 +1,12 @@
 // Checks if document is loaded
-const performWhenDocumentIsLoaded = callback => {
+const tainacanUrlPluginPerformWhenDocumentIsLoaded = callback => {
     if (/comp|inter|loaded/.test(document.readyState))
         cb();
     else
         document.addEventListener('DOMContentLoaded', callback, false);
 }
 
-performWhenDocumentIsLoaded(function() {
+tainacanUrlPluginPerformWhenDocumentIsLoaded(function() {
     setTimeout(function() {
         const notificationDismiss = document.querySelector('#tainacan-url-plugin-deprecation-notification .notice-dismiss');
     
