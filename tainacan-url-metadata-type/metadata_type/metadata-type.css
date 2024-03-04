@@ -3,7 +3,7 @@
     display: block;
     max-height: 1px;
     width: 80px;
-    background: var(--tainacan-gray3, #cbcbcb);
+    background: var(--tainacan-gray3, #a5a5a5);
     content: none;
     color: transparent !important;
     margin: 1em auto 1em 0 !important;

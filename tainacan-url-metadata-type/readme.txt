@@ -2,14 +2,16 @@
 Author: tainacan
 Contributors: wetah, vnmedeiros, leogermani, tainacan
 Tags: museums, libraries, archives, GLAM, collections, repository, tainacan, url, embed
-Requires at least: 5.0
-Tested up to: 6.0
-Requires PHP: 5.6
-Stable tag: 0.1.1
+Requires at least: 5.9
+Tested up to: 6.4
+Requires PHP: 7.0
+Stable tag: 0.2.0
+Requires Plugins: tainacan
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-
+<DEPRECATION WARNING>
+This plugin is not required anymore if you are using Tainacan 0.21.0, as the URL metadata type has become an official metadata type inside the plugin. If you have already updated to version 0.21.0 of Tainacan, all your metadata are already migrated to the new type and you can safely disable this plugin.
 An extra metadata type plugin for Tainacan, which allows creating metadata that displays an embed URL, such as YouTube, Instagram or Flickr.
  
 == Description ==
@@ -32,6 +34,11 @@ This plugin will only work with [Tainacan plugin](https://wordpress.org/plugins/
 * Source code on GitHub: [https://github.com/tainacan/tainacan-metadata-type-url](https://github.com/tainacan/tainacan-metadata-type-url)
 
 == Changelog ==
+
+= 0.2.0 =
+* Trim URL before checking as valid
+* Adds wp-element-button class to buttons
+* Adds Tainacan update and deprecation warning
 
 = 0.1.1 =
 * Adds responsive wrapper from Tainacan plugin

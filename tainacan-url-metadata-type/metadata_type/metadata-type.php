@@ -12,7 +12,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 		parent::__construct();
 
         // Basic options
-        $this->set_name( __('URL', 'tainacan-metadata-type-url') );
+        $this->set_name( __('URL (Legacy)', 'tainacan-metadata-type-url') );
         $this->set_description( __('An URL link, possibly with an embed content.', 'tainacan-metadata-type-url') );
         $this->set_primitive_type(['text']);
         $this->set_component('tainacan-metadata-type-url');
@@ -113,7 +113,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 		if ($link_as_button) {
 			$mkstr = preg_replace(
 				'/\[([^\]]+)\]\(([^\)]+)\)/',
-				'<div class="wp-block-button"><a class="wp-block-button__link" href="\2" target="_blank" title="\1">\1</a></div>',
+				'<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="\2" target="_blank" title="\1">\1</a></div>',
 				$value
 			);
 			$return = $this->make_clickable_links($mkstr);
@@ -181,6 +181,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 				// Empty strings are valid
 				if ( !empty($url_value) ) {
 
+					$url_value = trim($url_value);
+
 					// If this seems to be a markdown link, we check if the url inside it is ok as well
 					if ( !preg_match($reg_url, $url_value) && !preg_match($reg_full, $url_value) ) {
 						$this->add_error( sprintf( __('"%s" is invalid. Please provide a valid, full URL or a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url'), $url_value ) );
@@ -194,6 +196,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 		// Single valued metadata --------------
 		// Empty strings are valid
 		if ( !empty($value) ) {
+
+			$value = trim($value);
 
 			// If this seems to be a markdown link, we check if the url inside it is ok as well
 			if ( !preg_match($reg_url, $value) && !preg_match($reg_full, $value) ) {
