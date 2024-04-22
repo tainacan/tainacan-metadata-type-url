@@ -12,8 +12,8 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 		parent::__construct();
 
         // Basic options
-        $this->set_name( __('URL (Legacy)', 'tainacan-metadata-type-url') );
-        $this->set_description( __('An URL link, possibly with an embed content.', 'tainacan-metadata-type-url') );
+        $this->set_name( __('URL (Legacy)', 'tainacan-url-metadata-type') );
+        $this->set_description( __('An URL link, possibly with an embed content.', 'tainacan-url-metadata-type') );
         $this->set_primitive_type(['text']);
         $this->set_component('tainacan-metadata-type-url');
         $this->set_form_component('tainacan-metadata-form-type-url');
@@ -36,24 +36,24 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 	public function get_form_labels(){
 		return [
 			'link-as-button' => [
-				'title' 	  => __( 'Display link as a button', 'tainacan-metadata-type-url' ),
-				'description' => __( 'Style the link to be displayed as a button instead of a simple textual link.', 'tainacan-metadata-type-url' ),
+				'title' 	  => __( 'Display link as a button', 'tainacan-url-metadata-type' ),
+				'description' => __( 'Style the link to be displayed as a button instead of a simple textual link.', 'tainacan-url-metadata-type' ),
 			],
 			'force-iframe' => [
-				'title' 	  => __( 'Force iframe', 'tainacan-metadata-type-url' ),
-				'description' => __( 'Force the URL to be displayed in an iframe in case the content is not embeddable by WordPress.', 'tainacan-metadata-type-url' ),
+				'title' 	  => __( 'Force iframe', 'tainacan-url-metadata-type' ),
+				'description' => __( 'Force the URL to be displayed in an iframe in case the content is not embeddable by WordPress.', 'tainacan-url-metadata-type' ),
 			],
 			'iframe-min-height' => [
-				'title' 	  => __( 'Forced iframe minimum height', 'tainacan-metadata-type-url' ),
-				'description' => __( 'If forcing the use of an iframe, sets the height attribute, in pixels. Leave it empty to be 100% of the container.', 'tainacan-metadata-type-url' ),
+				'title' 	  => __( 'Forced iframe minimum height', 'tainacan-url-metadata-type' ),
+				'description' => __( 'If forcing the use of an iframe, sets the height attribute, in pixels. Leave it empty to be 100% of the container.', 'tainacan-url-metadata-type' ),
 			],
 			'iframe-allowfullscreen' => [
-				'title' 	  => __( 'Allow fullscreen on forced iframe', 'tainacan-metadata-type-url' ),
-				'description' => __( 'If forcing the use of an iframe, allows it to request fullscreen to the browser.', 'tainacan-metadata-type-url' ),
+				'title' 	  => __( 'Allow fullscreen on forced iframe', 'tainacan-url-metadata-type' ),
+				'description' => __( 'If forcing the use of an iframe, allows it to request fullscreen to the browser.', 'tainacan-url-metadata-type' ),
 			],
 			'is-image' => [
-				'title' 	  => __( 'Is link to external image', 'tainacan-metadata-type-url' ),
-				'description' => __( 'If you are linking directly to an external image, use this option so it can be properly embedded.', 'tainacan-metadata-type-url' ),
+				'title' 	  => __( 'Is link to external image', 'tainacan-url-metadata-type' ),
+				'description' => __( 'If you are linking directly to an external image, use this option so it can be properly embedded.', 'tainacan-url-metadata-type' ),
 			]
 		];
 	}
@@ -185,7 +185,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 
 					// If this seems to be a markdown link, we check if the url inside it is ok as well
 					if ( !preg_match($reg_url, $url_value) && !preg_match($reg_full, $url_value) ) {
-						$this->add_error( sprintf( __('"%s" is invalid. Please provide a valid, full URL or a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url'), $url_value ) );
+						$this->add_error( sprintf( __('"%s" is invalid. Please provide a valid, full URL or a Markdown link in the form of [label](url).', 'tainacan-url-metadata-type'), $url_value ) );
 						return false;
 					}
 				}
@@ -201,7 +201,7 @@ class TAINACAN_URL_Plugin_Metadata_Type extends \Tainacan\Metadata_Types\Metadat
 
 			// If this seems to be a markdown link, we check if the url inside it is ok as well
 			if ( !preg_match($reg_url, $value) && !preg_match($reg_full, $value) ) {
-				$this->add_error( sprintf( __('"%s" is invalid. Please provide a valid, full URL or a Markdown link in the form of [label](url).', 'tainacan-metadata-type-url'), $value ) );
+				$this->add_error( sprintf( __('"%s" is invalid. Please provide a valid, full URL or a Markdown link in the form of [label](url).', 'tainacan-url-metadata-type'), $value ) );
 				return false;
 			}
 		}
