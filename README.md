@@ -1,4 +1,5 @@
 # Tainacan URL Metadata Type
+[![Project Status: Unsupported – The project has reached a stable, usable state but the author(s) have ceased all work on it. A new maintainer may be desired.](https://www.repostatus.org/badges/latest/unsupported.svg)](https://www.repostatus.org/#unsupported)
 
 This repo contains an URL Metadata Type plugin for [Tainacan](https://tainacan.org). It accepts URL values and, when possible, renders them as an embed.
 
